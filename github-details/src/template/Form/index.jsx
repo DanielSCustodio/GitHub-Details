@@ -1,4 +1,5 @@
 import React from 'react';
+import ContextGlobal from '../../global/context';
 import { FaPlus, FaSpinner } from 'react-icons/fa';
 import api from '../../services/api';
 
@@ -6,8 +7,9 @@ import { Container, SubmitBtn } from './styles';
 
 export default function Form() {
   const [newRepo, setNewRepo] = React.useState('');
-  const [listRepositories, setListRepositories] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const { listRepositories, setListRepositories } =
+    React.useContext(ContextGlobal);
 
   const handleSubmit = React.useCallback(
     (e) => {
@@ -29,7 +31,7 @@ export default function Form() {
       }
       getData();
     },
-    [listRepositories, newRepo],
+    [listRepositories, newRepo, setListRepositories],
   );
 
   return (
