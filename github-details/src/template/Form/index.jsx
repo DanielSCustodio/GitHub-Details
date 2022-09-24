@@ -34,6 +34,7 @@ export default function Form() {
           }
           const datas = {
             name: data.full_name,
+            avatar: data.owner.avatar_url,
           };
           setListRepositories([...listRepositories, datas]);
           setNewRepo('');

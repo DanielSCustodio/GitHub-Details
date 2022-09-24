@@ -8,6 +8,17 @@ export default function Home() {
   const { listRepositories, setListRepositories } =
     React.useContext(ContextGlobal);
 
+  React.useEffect(() => {
+    const repoStorage = localStorage.getItem('repos');
+    if (repoStorage) {
+      setListRepositories(JSON.parse(repoStorage));
+    }
+  }, [setListRepositories]);
+
+  React.useEffect(() => {
+    localStorage.setItem('repos', JSON.stringify(listRepositories));
+  }, [listRepositories]);
+
   const handleDelete = React.useCallback(
     (repo) => {
       const repoDelete = listRepositories.filter((item) => item.name !== repo);
@@ -15,6 +26,7 @@ export default function Home() {
     },
     [listRepositories, setListRepositories],
   );
+
   return (
     <>
       <Container>
@@ -31,7 +43,10 @@ export default function Home() {
               <DeleteButton onClick={() => handleDelete(item.name)}>
                 <FaTrash size={14} />
               </DeleteButton>
-              <span>{item.name}</span>
+              <div>
+                <img src={item.avatar} alt={item.name} />
+                <span>{item.name}</span>
+              </div>
               <a href="">
                 <FaBars size={14} />
               </a>

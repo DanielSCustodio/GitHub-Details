@@ -47,9 +47,21 @@ export const List = styled.ul`
     border: 1px solid #30363d;
     margin: 2rem auto;
     padding: 1rem;
+    height: 15vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 25px;
+        margin-right: 1rem;
+        border-radius: 50%;
+      }
+    }
   }
 
   a {
