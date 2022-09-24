@@ -2,6 +2,7 @@ import styled, { keyframes, css } from 'styled-components';
 
 export const Container = styled.form`
   display: flex;
+  flex-wrap: wrap;
   padding: 1rem;
   margin: 1rem 0;
   width: 100%;
@@ -10,9 +11,15 @@ export const Container = styled.form`
     flex: 1;
     padding: 5px 12px;
     background-color: #0d1117;
-    border: 1px solid #30363d;
+    border: 1px solid ${(props) => (props.error ? '#da3633' : '#30363d')};
     border-radius: 6px;
     color: #c9d1d9;
+  }
+
+  span {
+    width: 100%;
+    margin-top: 1rem;
+    color: #da3633;
   }
 `;
 

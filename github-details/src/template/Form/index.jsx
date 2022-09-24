@@ -8,6 +8,7 @@ import { Container, SubmitBtn } from './styles';
 export default function Form() {
   const [newRepo, setNewRepo] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [requestError, setRequesError] = React.useState(null);
   const { listRepositories, setListRepositories } =
     React.useContext(ContextGlobal);
 
@@ -17,32 +18,53 @@ export default function Form() {
       async function getData() {
         setLoading(true);
         try {
-          const response = await api.get(`repos/${newRepo}`);
-          const data = {
-            name: response.data.full_name,
+          if (!newRepo) {
+            setRequesError('Informe um repositório.');
+            return;
+          }
+          const { data } = await api.get(`repos/${newRepo}`);
+
+          const hasRepo = listRepositories.find(
+            (repo) => repo.name === newRepo,
+          );
+
+          if (hasRepo) {
+            setRequesError(`O repositório ${newRepo} já está listado.`);
+            return;
+          }
+          const datas = {
+            name: data.full_name,
+            avatar: data.owner.avatar_url,
           };
-          setListRepositories([...listRepositories, data]);
+          setListRepositories([...listRepositories, datas]);
           setNewRepo('');
+          setRequesError('');
         } catch (error) {
-          console.log(error);
+          setRequesError(
+            `Não existe nenhum repositório que corresponda a "${newRepo}".`,
+          );
         } finally {
           setLoading(false);
         }
       }
       getData();
     },
-    [listRepositories, newRepo, setListRepositories],
+    [listRepositories, newRepo, setListRepositories, setRequesError],
   );
 
+  function handleInputChange(e) {
+    setNewRepo(e.target.value);
+    setRequesError(null);
+  }
+
   return (
-    <Container onSubmit={handleSubmit}>
+    <Container onSubmit={handleSubmit} error={requestError}>
       <input
         type="text"
         placeholder="username/repositório"
         value={newRepo}
-        onChange={(e) => setNewRepo(e.target.value)}
+        onChange={handleInputChange}
       />
-
       <SubmitBtn loading={loading ? 1 : 0}>
         {loading ? (
           <FaSpinner color="#fff" size={14} />
@@ -50,6 +72,7 @@ export default function Form() {
           <FaPlus color="#fff" size={14} />
         )}
       </SubmitBtn>
+      {requestError && <span>{requestError}</span>}
     </Container>
   );
 }
