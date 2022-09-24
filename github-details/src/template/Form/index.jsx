@@ -25,7 +25,7 @@ export default function Form() {
           const { data } = await api.get(`repos/${newRepo}`);
 
           const hasRepo = listRepositories.find(
-            (repo) => repo.name === newRepo,
+            (repo) => repo.name === data.full_name,
           );
 
           if (hasRepo) {

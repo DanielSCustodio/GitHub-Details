@@ -2,6 +2,7 @@ import React from 'react';
 import ContextGlobal from '../../global/context';
 import { FaGithub, FaBars, FaTrash } from 'react-icons/fa';
 import Form from '../../template/Form';
+import { Link } from 'react-router-dom';
 import { Container, List, DeleteButton } from './styles';
 
 export default function Home() {
@@ -40,16 +41,16 @@ export default function Home() {
         {listRepositories &&
           listRepositories.map((item) => (
             <li key={item.name}>
-              <DeleteButton onClick={() => handleDelete(item.name)}>
-                <FaTrash size={14} />
-              </DeleteButton>
               <div>
+                <DeleteButton onClick={() => handleDelete(item.name)}>
+                  <FaTrash size={14} />
+                </DeleteButton>
                 <img src={item.avatar} alt={item.name} />
                 <span>{item.name}</span>
               </div>
-              <a href="">
+              <Link to={`/repositorio/${encodeURIComponent(item.name)}`}>
                 <FaBars size={14} />
-              </a>
+              </Link>
             </li>
           ))}
       </List>
