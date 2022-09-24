@@ -63,4 +63,9 @@ export const DeleteButton = styled.button.attrs({
   background: transparent;
   color: #da3633;
   border: 0;
+  transition: 0.8s;
+
+  &:hover {
+    color: #db0b0b;
+  }
 `;
