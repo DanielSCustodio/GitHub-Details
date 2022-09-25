@@ -36,7 +36,7 @@ export default function Form() {
             name: data.full_name,
             avatar: data.owner.avatar_url,
           };
-          setListRepositories([...listRepositories, datas]);
+          setListRepositories([datas, ...listRepositories]);
           setNewRepo('');
           setRequesError('');
         } catch (error) {
