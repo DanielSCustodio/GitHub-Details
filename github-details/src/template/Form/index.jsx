@@ -25,7 +25,7 @@ export default function Form() {
           const { data } = await api.get(`repos/${newRepo}`);
 
           const hasRepo = listRepositories.find(
-            (repo) => repo.name === newRepo,
+            (repo) => repo.name === data.full_name,
           );
 
           if (hasRepo) {
@@ -36,7 +36,7 @@ export default function Form() {
             name: data.full_name,
             avatar: data.owner.avatar_url,
           };
-          setListRepositories([...listRepositories, datas]);
+          setListRepositories([datas, ...listRepositories]);
           setNewRepo('');
           setRequesError('');
         } catch (error) {

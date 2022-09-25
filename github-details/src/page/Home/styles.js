@@ -52,13 +52,17 @@ export const List = styled.ul`
     align-items: center;
     justify-content: space-between;
 
+    @media (max-width: 500px) {
+      height: 10vh;
+    }
+
     div {
       display: flex;
       align-items: center;
 
       img {
-        width: 25px;
-        margin-right: 1rem;
+        width: 30px;
+        margin: 0 2rem;
         border-radius: 50%;
       }
     }
@@ -66,6 +70,10 @@ export const List = styled.ul`
 
   a {
     color: #c9d1d9;
+
+    &:hover {
+      color: #babbbd;
+    }
   }
 `;
 
