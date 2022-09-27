@@ -1,12 +1,20 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import api from '../../services/api';
-import { Container, Owner, Loading, Back, IssuesList } from './styles';
+import {
+  Container,
+  Owner,
+  Loading,
+  Back,
+  IssuesList,
+  PageActions,
+} from './styles';
 
 export default function Repository({ match }) {
   const [reposytory, setRepository] = React.useState({});
   const [issues, setIssues] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
     async function getData() {
@@ -17,7 +25,7 @@ export default function Repository({ match }) {
         api.get(`/repos/${endpoint}/issues`, {
           params: {
             state: 'open',
-            per_page: 15,
+            per_page: 5,
           },
         }),
       ]);
@@ -27,6 +35,26 @@ export default function Repository({ match }) {
     }
     getData();
   }, [match.params.repositorio]);
+
+  React.useEffect(() => {
+    async function getIssues() {
+      const endpoint = decodeURIComponent(match.params.repositorio);
+
+      const response = await api.get(`/repos/${endpoint}/issues`, {
+        params: {
+          state: 'open',
+          page,
+          per_page: 5, //paginação
+        },
+      });
+      setIssues(response.data);
+    }
+    getIssues();
+  }, [match.params.repositorio, page]);
+
+  function handlePage(action) {
+    setPage(action === 'back' ? page - 1 : page + 1);
+  }
 
   if (loading) {
     return (
@@ -67,6 +95,25 @@ export default function Repository({ match }) {
             </li>
           ))}
       </IssuesList>
+      {issues.length > 1 && (
+        <PageActions>
+          <button
+            className="btn btn-first"
+            type="button"
+            onClick={() => handlePage('back')}
+            disabled={page < 2}
+          >
+            Voltar
+          </button>
+          <button
+            className="btn btn-second"
+            type="button"
+            onClick={() => handlePage('next')}
+          >
+            Próxima
+          </button>
+        </PageActions>
+      )}
     </>
   );
 }
