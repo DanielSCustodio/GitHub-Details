@@ -170,6 +170,10 @@ export const FilterList = styled.div`
   margin: 0 auto;
   margin-top: 1rem;
 
+  @media (max-width: 500px) {
+    max-width: 90vw;
+  }
+
   button {
     background-color: #161b22;
     color: #c9d1d9;
