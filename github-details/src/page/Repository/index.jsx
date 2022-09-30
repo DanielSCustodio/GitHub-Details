@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 import React from 'react';
 import api from '../../services/api';
@@ -8,6 +9,7 @@ import {
   Back,
   IssuesList,
   PageActions,
+  FilterList,
 } from './styles';
 
 export default function Repository({ match }) {
@@ -15,6 +17,13 @@ export default function Repository({ match }) {
   const [issues, setIssues] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [page, setPage] = React.useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const filter = [
+    { state: 'all', label: 'Todas', active: true },
+    { state: 'open', label: 'Abertas', active: true },
+    { state: 'closed', label: 'Fechadas', active: true },
+  ];
+  const [filterIndex, setFilterIndex] = React.useState(0);
 
   React.useEffect(() => {
     async function getData() {
@@ -24,7 +33,7 @@ export default function Repository({ match }) {
         api.get(`/repos/${endpoint}`),
         api.get(`/repos/${endpoint}/issues`, {
           params: {
-            state: 'open',
+            state: filter.find((f) => f.active === true).state,
             per_page: 5,
           },
         }),
@@ -42,7 +51,7 @@ export default function Repository({ match }) {
 
       const response = await api.get(`/repos/${endpoint}/issues`, {
         params: {
-          state: 'open',
+          state: filter[filterIndex].state,
           page,
           per_page: 5, //paginação
         },
@@ -50,7 +59,7 @@ export default function Repository({ match }) {
       setIssues(response.data);
     }
     getIssues();
-  }, [match.params.repositorio, page]);
+  }, [filterIndex, match.params.repositorio, page]);
 
   function handlePage(action) {
     setPage(action === 'back' ? page - 1 : page + 1);
@@ -73,6 +82,13 @@ export default function Repository({ match }) {
           <p>{reposytory.description}</p>
         </Owner>
       </Container>
+      <FilterList active={filterIndex}>
+        {filter.map((item, index) => (
+          <button key={item.label} onClick={() => setFilterIndex(index)}>
+            {item.label}
+          </button>
+        ))}
+      </FilterList>
       <IssuesList>
         {issues &&
           issues.map((item) => (

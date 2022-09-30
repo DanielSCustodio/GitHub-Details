@@ -164,3 +164,28 @@ export const PageActions = styled.div`
     border-left-width: 0;
   }
 `;
+
+export const FilterList = styled.div`
+  max-width: 50vw;
+  margin: 0 auto;
+  margin-top: 1rem;
+
+  @media (max-width: 500px) {
+    max-width: 90vw;
+  }
+
+  button {
+    background-color: #161b22;
+    color: #c9d1d9;
+
+    padding: 5px 1.5rem;
+    border: 0;
+    border-radius: 6px;
+    margin-left: 1rem;
+    transition: 0.8s;
+
+    &:nth-child(${(props) => props.active + 1}) {
+      background-color: #238636;
+    }
+  }
+`;
