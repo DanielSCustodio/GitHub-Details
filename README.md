@@ -9,7 +9,7 @@ Os repositórios encontrados são pilhados na página inicial e salvos no localS
 Na página de issues é possível filtrar entre: abertas, fechadas e todas. Além disso existe paginação na listagem das issues.
 
 A estilização da aplicação tem a intenção de seguir a identidade visual do site oficial do GitHub.<br><br>
-Deploy: 
+Deploy: https://git-hub-details.vercel.app/
 ## Tecnologias usadas
 
 Front-end:
