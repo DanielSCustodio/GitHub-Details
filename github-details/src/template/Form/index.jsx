@@ -41,7 +41,7 @@ export default function Form() {
           setRequesError('');
         } catch (error) {
           setRequesError(
-            `Não existe nenhum repositório que corresponda a "${newRepo}".`,
+            `Não existe repositório que corresponda a "${newRepo}".`,
           );
         } finally {
           setLoading(false);
