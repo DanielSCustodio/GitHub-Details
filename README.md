@@ -23,11 +23,11 @@ Back-end:
 
 >
 ```bash
-cd github-details/
+cd GitHub-Details/
 npm install
 ``` 
 ## Executando aplicação
 
   ```
-  cd github-details/ && npm start
+  cd GitHub-Details/ && npm start
 
