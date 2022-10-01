@@ -82,13 +82,15 @@ export default function Repository({ match }) {
           <p>{reposytory.description}</p>
         </Owner>
       </Container>
-      <FilterList active={filterIndex}>
-        {filter.map((item, index) => (
-          <button key={item.label} onClick={() => setFilterIndex(index)}>
-            {item.label}
-          </button>
-        ))}
-      </FilterList>
+      {issues.length > 0 && (
+        <FilterList active={filterIndex}>
+          {filter.map((item, index) => (
+            <button key={item.label} onClick={() => setFilterIndex(index)}>
+              {item.label}
+            </button>
+          ))}
+        </FilterList>
+      )}
       <IssuesList>
         {issues &&
           issues.map((item) => (
